@@ -17,8 +17,12 @@ void FCFS::run()
 			exit(0);
 		}else {//¸¸½ø³ÌÖ´ÐÐ
 			task.pid = pid;
-			task.pid = RUNNING;
+			task.state = RUNNING;
 			task.startTime = time(nullptr);
+			std::cout << "FCFS PID: " << pid << " Running..." << std::endl;
+			waitpid(pid, nullptr, 0);
+			task.state = TERMINATED;
+			task.endTime = time(nullptr);
 			completedTasks.push_back(task);
 			std::cout << "FCFS pid: " << pid << " Finished" << std::endl;
 		}
