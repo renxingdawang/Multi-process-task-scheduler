@@ -1,9 +1,9 @@
 #ifndef RR_H
 #define RR_H
-
+#include "Scheduler.h"
 #include"../task/task.h"
-#include<queue>
-#include<vector>
+#include <queue>
+#include <vector>
 #include <iostream>
 #include <unistd.h>
 #include <sys/wait.h>
@@ -14,8 +14,8 @@
 class RoundRobin :public Scheduler {
 public:
 	explicit RoundRobin(int quantum);
-	void addTask(Task task)override;
-	void run()override;
+	void addTask(Task task) override;
+	void run() override;
 	void printStatus() override;
 private:
 	int timeQuantum;

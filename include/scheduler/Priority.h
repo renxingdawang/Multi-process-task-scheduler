@@ -1,12 +1,15 @@
 #ifndef PRIORITY_H
 #define PRIORITY_H
-
-#include "../task/Task.h"
+#include "Scheduler.h"
+#include "../task/task.h"
 #include <vector>
-
-class PriorityScheduler {
+#include <iostream>
+#include <sys/wait.h>
+#include <unistd.h>
+#include <algorithm>
+class PriorityScheduler :public Scheduler {
 public:
-    void addTask(Task task)override;
+    void addTask(Task task) override;
     void run() override;
     void printStatus() override;
 

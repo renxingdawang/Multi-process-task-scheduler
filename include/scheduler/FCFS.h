@@ -11,7 +11,7 @@ class FCFS : public Scheduler {
 	std::queue<Task> taskQueue;
 	std::vector<Task> completedTasks;
 public:
-	void addTask(Task task)override;
+	void addTask(Task task) override;
 	void run() override;
 	void printStatus() override;
 };

@@ -1,4 +1,4 @@
-#include "Priority.h"
+#include "../../include/scheduler/Priority.h"
 
 void PriorityScheduler::addTask(Task task)
 {
