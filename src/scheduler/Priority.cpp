@@ -8,7 +8,6 @@ void PriorityScheduler::addTask(Task task)
 
 void PriorityScheduler::run()
 {
-    // �������ȼ�����ֵԽС���ȼ�Խ�ߣ�
     std::sort(taskQueue.begin(), taskQueue.end(), [](const Task& a, const Task& b) {
         return a.priority < b.priority;
         });
