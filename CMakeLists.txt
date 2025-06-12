@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 11)
 include_directories(
 	${CMAKE_SOURCE_DIR}/include
 )
-file(GLOB CPPS "${PROJECT_SOURCE_DIR}/src/*.cpp")
+file(GLOB_RECURSE CPPS "${PROJECT_SOURCE_DIR}/src/*.cpp")
 add_executable(ProcessScheduler
 	main.cpp
 	${CPPS}

@@ -36,7 +36,7 @@ void FCFS::printStatus()
 		int wait = task.startTime - task.arrivalTime;
 		int turnaround = task.endTime - task.arrivalTime;
 		totalWait += wait;
-		totalTurnaround+ = turnaround;
+		totalTurnaround += turnaround;
 	}
 	std::cout << "FCFS avg wait-time: " << totalWait / completedTasks.size() << std::endl;
 	std::cout << "FCFS avg turnaround-time: " << totalTurnaround / completedTasks.size() << std::endl;
