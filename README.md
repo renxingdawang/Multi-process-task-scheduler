@@ -4,4 +4,12 @@
 
 ### FSFC
 
-![](images\FCFS1.png)
+![](images\FCFS.png)
+
+### RR
+
+![](images/RR.png)
+
+### Priority
+
+![](images/Pri.png)
