@@ -1,4 +1,5 @@
 #include "../../include/scheduler/Priority.h"
+#include <algorithm>  // Added missing header for std::sort
 
 void PriorityScheduler::addTask(Task task)
 {
@@ -7,7 +8,7 @@ void PriorityScheduler::addTask(Task task)
 
 void PriorityScheduler::run()
 {
-    // 按照优先级升序（值越小优先级越高）
+    // 锟斤拷锟斤拷锟斤拷锟饺硷拷锟斤拷锟斤拷值越小锟斤拷锟饺硷拷越锟竭ｏ拷
     std::sort(taskQueue.begin(), taskQueue.end(), [](const Task& a, const Task& b) {
         return a.priority < b.priority;
         });
