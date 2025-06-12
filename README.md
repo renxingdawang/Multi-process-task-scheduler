@@ -4,7 +4,7 @@
 
 ### FSFC
 
-![](images\FCFS.png)
+![](images/FCFS.png)
 
 ### RR
 
