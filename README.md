@@ -4,4 +4,4 @@
 
 ### FSFC
 
-![image-20250612091209434](C:\Users\方品文\AppData\Roaming\Typora\typora-user-images\image-20250612091209434.png)
+![](images\FCFS1.png)
