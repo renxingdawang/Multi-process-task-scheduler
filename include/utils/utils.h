@@ -7,6 +7,7 @@
 class Utils {
 public:
 	static void printTaskStatus(const Task& task);
+	static auto parseTask(const std::string& data)->Task;
 };
 
 #endif // !UTILS_H

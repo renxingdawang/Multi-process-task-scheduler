@@ -2,6 +2,7 @@
 
 void FCFS::addTask(Task task)
 {
+	std::lock_guard<std::mutex>lock(queueMutex);
 	taskQueue.push(task);
 }
 

@@ -11,3 +11,6 @@ add_executable(ProcessScheduler
 	main.cpp
 	${CPPS}
 )
+
+# 链接线程库（如果需要）
+target_link_libraries(ProcessScheduler PRIVATE pthread)

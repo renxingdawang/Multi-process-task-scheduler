@@ -13,3 +13,9 @@
 ### Priority
 
 ![](images/Pri.png)
+
+### Pipe_Add_task
+
+![](images/pipe_a.png)
+
+![](images/pipe_b.png)

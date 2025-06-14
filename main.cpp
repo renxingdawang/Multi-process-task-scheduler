@@ -1,7 +1,46 @@
 #include"include/scheduler/FCFS.h"
 #include"include/scheduler/RR.h"
 #include"include/scheduler/Priority.h"
-//#include<ctime>
+#include"include/utils/utils.h"
+#include <errno.h>
+#include <pthread.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#define PIPE_PATH "/tmp/task_pipe"
+#include<ctime>
+
+// 全局调度器指针（根据实际使用的调度器类型调整）
+Scheduler* global_scheduler = nullptr;
+
+// 管道监听线程函数（非阻塞读取）
+
+void* listenPipe(void* arg) {
+    char buffer[256];
+    while (true) {
+        // 读取管道数据（非阻塞模式）
+        ssize_t bytesRead = read(*(int*)arg, buffer, sizeof(buffer) - 1);
+        if (bytesRead > 0) {
+            buffer[bytesRead] = '\0';
+            Task newTask = Utils::parseTask(buffer);
+            if (newTask.id != -1 && global_scheduler) {
+                global_scheduler->addTask(newTask);
+                std::cout << "成功添加新任务，ID: " << newTask.id << std::endl;
+            }
+        }
+        else if (bytesRead == -1) {
+            if (errno == EAGAIN || errno == EWOULDBLOCK) {
+                // 无数据可读，休眠100ms降低CPU占用
+                usleep(100000);
+                continue;
+            }
+            perror("Read pipe failed");
+            break;
+        }
+    }
+    return nullptr;
+}
+
 int main() {
     
     // ---------------- FCFS Test----------------
@@ -34,5 +73,39 @@ int main() {
     priority_scheduler.run();
     priority_scheduler.printStatus();
 
+    global_scheduler = &fcfs_scheduler;
+
+    // 创建命名管道（若已存在则忽略错误）
+    int ret = mkfifo(PIPE_PATH, 0666);
+    if (ret == -1 && errno != EEXIST) {
+        perror("Create pipe failed");
+        return 1;
+    }
+
+    // 打开管道用于非阻塞读取
+    int pipe_fd = open(PIPE_PATH, O_RDONLY | O_NONBLOCK);
+    if (pipe_fd == -1) {
+        perror("Open pipe failed");
+        return 1;
+    }
+
+    // 启动监听线程
+    pthread_t pipeThread;
+    if (pthread_create(&pipeThread, nullptr, listenPipe, &pipe_fd) != 0) {
+        perror("Create thread failed");
+        close(pipe_fd);
+        return 1;
+    }
+
+    std::cout << "--- main thread opened,please add task by pipe ---";
+    time_t now = time(nullptr);
+    fcfs_scheduler.addTask({ -1, 1, 3, 3, 1, READY, now_fcfs, 0, 0 });
+    fcfs_scheduler.addTask({ -1, 2, 5, 5, 1, READY, now_fcfs, 0, 0 });
+    fcfs_scheduler.addTask({ -1, 3, 2, 2, 1, READY, now_fcfs, 0, 0 });
+    fcfs_scheduler.run();
+
+    // 等待监听线程结束（实际可根据需求调整退出逻辑）
+    pthread_join(pipeThread, nullptr);
+    close(pipe_fd);
     return 0;
 }
