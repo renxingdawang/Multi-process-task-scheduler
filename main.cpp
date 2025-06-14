@@ -97,7 +97,7 @@ int main() {
         return 1;
     }
 
-    std::cout << "--- main thread opened,please add task by pipe ---";
+    std::cout << "--- main thread opened,please add task by pipe ---"<<std::endl;
     time_t now = time(nullptr);
     fcfs_scheduler.addTask({ -1, 1, 3, 3, 1, READY, now_fcfs, 0, 0 });
     fcfs_scheduler.addTask({ -1, 2, 5, 5, 1, READY, now_fcfs, 0, 0 });
